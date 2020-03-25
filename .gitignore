@@ -1,7 +1,6 @@
 auto-save-list
 .cache
 elpa
-lisp
 .lsp-session-v1
 recentf
 transient
