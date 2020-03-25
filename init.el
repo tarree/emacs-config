@@ -179,7 +179,7 @@
   :init
   (setq js-indent-level 2)
   (setq-default indent-tabs-mode nil)
-  (setq lsp-enable-snippet nil)
+  (setq lsp-ui-doc-position 'top)
   (add-to-list 'exec-path "/home/sam/.elixir-ls/release/"))
 
 (use-package lsp-ui
@@ -196,6 +196,14 @@
 ;; (require 'lsp-clients)
 ;; (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
 ;; (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
+
+
+(use-package yasnippet :ensure t)
+(yas-global-mode 1)
+
+(use-package yasnippet-snippets
+  :ensure t
+  :after (yasnippet))
 
 ;; --------------------------------------------------------------- [ debugging ]
 (dap-mode 1)
