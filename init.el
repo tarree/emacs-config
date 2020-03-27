@@ -246,6 +246,29 @@
 ;; npm i -g vscode-css-languageserver-bin
 ;; npm i -g vscode-html-languageserver-bin
 
+
+(use-package web-mode
+  :mode
+  ("\\.html$" . web-mode)
+  ("\\.phtml\\'" . web-mode)
+  ("\\.tpl\\.php\\'" . web-mode)
+  ("\\.[agj]sp\\'" . web-mode)
+  ("\\.as[cp]x\\'" . web-mode)
+  ("\\.erb\\'" . web-mode)
+  ("\\.mustache\\'" . web-mode)
+  ("\\.djhtml\\'" . web-mode)
+  ("\\.eex\\'" . web-mode)
+  :init
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq js-indent-level 2)
+  (setq web-mode-enable-auto-pairing t)
+  (setq web-mode-enable-auto-expanding t)
+  (setq web-mode-enable-css-colorization t)
+  (setq web-mode-tag-auto-close-style 1)
+  (add-hook 'web-mode-hook 'electric-pair-mode))
+
 ;; ------------------------------------------------------------------ [ c/c++ ]
 ;; clangd
 

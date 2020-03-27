@@ -79,6 +79,8 @@
     ;; Ruby
     robe
     rinari
+    ;; Web
+    web-mode
     ;;
     ;; End of lang sections
     ) "A list of packages to ensure are installed at launch.")
