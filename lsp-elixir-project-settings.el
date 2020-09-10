@@ -1,0 +1,1 @@
+#s(hash-table size 65 test equal rehash-size 1.5 rehash-threshold 0.8125 data ("lsp-elixir-projects-version" 1 "lsp-elixir-projects" #s(hash-table size 65 test equal rehash-size 1.5 rehash-threshold 0.8125 data ("~/dev/buildpromotion/" "21" "~/" "21"))))

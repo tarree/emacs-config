@@ -3,13 +3,12 @@
 ;;; Created by Patrik Hartlén
 
 ;;; Code:
-
-(eval-when-compile (require 'cl))
+;;(eval-when-compile (require 'cl-lib))
+(require 'cl-lib)
 (require 'package)
-(package-initialize)
 
 (add-to-list 'package-archives
-             '("melpa" . "http://melpa.org/packages/"))
+             '("melpa" . "https://melpa.org/packages/"))
 
 (defvar required-packages
   '(
@@ -73,7 +72,6 @@
     dockerfile-mode
     ;; Elixir
     elixir-mode
-    lsp-elixir
     flycheck-credo
     flycheck-dialyxir
     ;; Ruby
@@ -81,15 +79,17 @@
     rinari
     ;; Web
     web-mode
+    web-beautify
+    json-mode
+    ;; Org Mode
+    org-super-agenda
     ;;
     ;; End of lang sections
     ) "A list of packages to ensure are installed at launch.")
 
 (defun packages-installed-p ()
   "Check that all packages are installed."
-  (loop for p in required-packages
-        when (not (package-installed-p p)) do (return nil)
-        finally (return t)))
+  (cl-every 'package-installed-p required-packages))
 
 ; if not all packages are installed, check one by one and install the missing ones.
 (unless (packages-installed-p)
