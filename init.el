@@ -76,10 +76,13 @@
 (use-package ivy-posframe
   :ensure t
   :config
-  (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-window-center)))
+  (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
   (setq ivy-posframe-min-width 90
         ivy-posframe-width 110)
-  (setq ivy-posframe-border-width 2))
+  (setq ivy-posframe-border-width 2)
+  (setq ivy-posframe-parameters
+      '((left-fringe . 8)
+        (right-fringe . 8))))
 (ivy-posframe-mode 1)
 
 (use-package counsel
@@ -128,6 +131,13 @@
               ("E" . 'vdiff-magit-popup))
   :config
   (setq magit-completing-read-function 'ivy-completing-read))
+
+(use-package forge
+  :ensure t
+  :after magit)
+(with-eval-after-load 'forge
+  (push '("github.schneider-electric.com" "github.schneider-electric.com/api/v3" "github.schneider-electric.com" forge-github-repository) forge-alist)
+)
 
 (use-package ace-jump-mode
   :bind ("C-." . ace-jump-mode))
