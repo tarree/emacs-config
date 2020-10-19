@@ -376,11 +376,21 @@
 (eval-after-load 'flycheck
   '(flycheck-credo-setup))
 
+;; Code for adding flycheck checkers for elixir
+(defun my-elixir-flycheck-setup ()
+  (add-to-list 'flycheck-checkers 'lsp)
+  ;; Dialyxir and credo must be added as required dependencies to mix.exs
+  (flycheck-add-next-checker 'lsp 'elixir-dialyxir)
+  (flycheck-add-next-checker 'lsp 'elixir-credo))
+
 ;; Setup elixir mode
 (use-package elixir-mode
   :after (company lsp-mode)
   :ensure t
   :config
+  ;; Enable flycheck for elixir
+  (add-hook 'elixir-mode-hook 'flycheck-mode)
+  (add-hook 'elixir-mode-hook 'my-elixir-flycheck-setup)
   ;; Create a buffer-local hook to run elixir-format on save, only when we enable elixir-mode.
   (add-hook 'elixir-mode-hook
             (lambda () (add-hook 'before-save-hook 'elixir-format nil t))))
@@ -390,18 +400,6 @@
 (add-hook 'lsp-after-initialize-hook
           (lambda ()
             (lsp--set-configuration `(:elixirLS, lsp-elixir--config-options))))
-
-
-;; Enable flycheck for elixir
-(add-hook 'elixir-mode-hook 'flycheck-mode)
-
-;; COde for adding flycheck checkers for elixir
-(defun my-elixir-flycheck-setup ()
-  (add-to-list 'flycheck-checkers 'lsp)
-  ;; Dialyxir and credo must be added as required dependencies to mix.exs
-  (flycheck-add-next-checker 'lsp 'elixir-dialyxir)
-  (flycheck-add-next-checker 'lsp 'elixir-credo))
-(add-hook 'elixir-mode-hook 'my-elixir-flycheck-setup)
 
 ;; Disable file watcher for deps folder
 (push "[/\\\\]deps$" lsp-file-watch-ignored)
