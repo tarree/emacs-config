@@ -238,13 +238,18 @@
 ;; sudo pacman -S python-language-server
 ;; pip install python-language-server[all] ptvsd (debugging)
 (require 'dap-python)
-(add-hook 'python-mode-hook 'flycheck-mode)
 
 (defun my-python-flycheck-setup ()
   (add-to-list 'flycheck-checkers 'lsp)
   (flycheck-add-next-checker 'lsp 'python-pylint)
   (flycheck-add-next-checker 'python-pylint 'python-flake8))
-(add-hook 'python-mode-hook 'my-python-flycheck-setup)
+
+(with-eval-after-load 'lsp
+  (with-eval-after-load 'flycheck
+    (add-hook 'python-mode-hook 'flycheck-mode)
+    (add-hook 'python-mode-hook 'my-python-flycheck-setup)))
+(setq python-shell-interpreter "ipython"
+      python-shell-interpreter-args "-i")
 
 ;; -------------------------------------------------------------------- [ java ]
 (use-package lsp-java
