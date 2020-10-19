@@ -248,8 +248,9 @@
   (with-eval-after-load 'flycheck
     (add-hook 'python-mode-hook 'flycheck-mode)
     (add-hook 'python-mode-hook 'my-python-flycheck-setup)))
-(setq python-shell-interpreter "ipython"
-      python-shell-interpreter-args "-i")
+(setq py-shell-name "ipython"
+      py-python-command-args '("-i")
+      python-shell-interpreter "ipython")
 
 ;; -------------------------------------------------------------------- [ java ]
 (use-package lsp-java
