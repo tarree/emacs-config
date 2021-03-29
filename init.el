@@ -5,101 +5,12 @@
 ;;; Code:
 
 ;; -------------------------------------------------------- [ general settings ]
-
-;; Added by Package.el.  This must come before configurations of
-;; installed packages.  Don't delete this line.  If you don't want it,
-;; just comment it out by adding a semicolon to the start of the line.
-;; You may delete these explanatory comments.
-
-(windmove-default-keybindings 'shift)
-
-;; Disable toolbar & menubar
-(menu-bar-mode -1)
-(when (fboundp 'tool-bar-mode)
-  (tool-bar-mode -1))
-(when (  fboundp 'scroll-bar-mode)
-  (scroll-bar-mode -1))
-
-(show-paren-mode t)
-(column-number-mode t)
-(global-display-line-numbers-mode t)
-(setq ring-bell-function 'ignore
-      inhibit-splash-screen t
-      initial-scratch-message nil
-      visible-bell nil
-      mac-right-option-modifier nil
-      backup-inhibited t
-      auto-save-default nil
-      lsp-prefer-flymake nil)
 (add-to-list 'load-path "~/.emacs.d/lisp/")
-(defalias 'yes-or-no-p 'y-or-n-p)
 
-(set-face-attribute 'default nil
-                    :family "Hack"
-                    :height 110
-                    :weight 'regular
-                    :width 'normal)
-
-
-(add-hook 'before-save-hook 'delete-trailing-whitespace)
+(require 'base)
 
 ;; --------------------------------------------------------- [ package manager ]
 (load "general-packages.el")
-;; ------------------------------------------------------------ [ color themes ]
-(load-theme 'doom-one t)
-
-;; -------------------------------------------------------- [ setup shell macOS]
-(use-package exec-path-from-shell
-  :if (memq window-system '(mac ns))
-  :ensure t
-  :config
-  (exec-path-from-shell-initialize))
-
-;; ---------------------------------------------------------- [ doom-mode line ]
-;; M-x all-the-icons-install-fonts
-(use-package doom-modeline
-  :ensure t
-  :hook (after-init . doom-modeline-mode))
-
-;; ------------------------------------------------------------ [ ibuffer mode ]
-(global-set-key (kbd "C-x C-b") 'ibuffer)
-(autoload 'ibuffer "ibuffer" "List buffers." t)
-(require 'uniquify)
-
-;; -------------------------------------------------------- [ ivy counsel smex ]
-(use-package ivy
-  :ensure t
-  :config
-  (setq ivy-use-virtual-buffers t
-        ivy-count-format "%d/%d "))
-
-(use-package ivy-posframe
-  :ensure t
-  :config
-  (setq ivy-posframe-display-functions-alist '((t . ivy-posframe-display-at-frame-center)))
-  (setq ivy-posframe-min-width 90
-        ivy-posframe-width 110)
-  (setq ivy-posframe-border-width 2)
-  (setq ivy-posframe-parameters
-      '((left-fringe . 8)
-        (right-fringe . 8))))
-(ivy-posframe-mode 1)
-
-(use-package counsel
-  :ensure t
-  :config
-  (use-package smex
-    :ensure t)
-  (use-package flx
-    :ensure t)
-  (ivy-mode 1)
-  (setq ivy-initial-inputs-alist nil)
-  (setq ivy-re-builders-alist
-        '((swiper . ivy--regex-plus)
-          (t      . ivy--regex-fuzzy))))
-
-(global-set-key (kbd "C-s") 'swiper)
-(global-set-key (kbd "C-x f") 'find-file-in-repository)
 
 ;; -------------------------------------------------------------- [ move lines ]
 (defun move-line-up ()
@@ -211,6 +122,9 @@
   (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
   )
 (add-hook 'lsp-mode-hook 'lsp-ui-mode)
+
+(require 'init-flycheck)
+
 (use-package company-lsp :commands company-lsp)
 
 ;; in case you are using client which is available as part of lsp refer to the
@@ -227,9 +141,6 @@
   :ensure t
   :after (yasnippet))
 
-(use-package company-box
-  :ensure t
-  :hook (company-mode . company-box-mode))
 
 ;; --------------------------------------------------------------- [ debugging ]
 (dap-mode 1)
@@ -253,23 +164,6 @@
 ;; ------------------------------------------------------------------ [ python ]
 ;; sudo pacman -S python-language-server
 ;; pip install python-language-server[all] ptvsd (debugging)
-(require 'dap-python)
-
-(defun my-python-flycheck-setup ()
-  (message "Testing")
-  (add-to-list 'flycheck-checkers 'lsp)
-  (flycheck-add-next-checker 'lsp 'python-pylint)
-  (flycheck-add-next-checker 'python-pylint 'python-flake8))
-
-(with-eval-after-load 'lsp-ui
-  (message "Loaded lsp")
-  (with-eval-after-load 'flycheck
-    (message "Loaded flycheck")
-    (add-hook 'python-mode-hook 'flycheck-mode)
-    (add-hook 'python-mode-hook 'my-python-flycheck-setup)))
-(setq py-shell-name "ipython"
-      py-python-command-args '("-i")
-      python-shell-interpreter "ipython")
 
 ;; -------------------------------------------------------------------- [ java ]
 (use-package lsp-java
@@ -543,7 +437,7 @@
  ;; Your init file should contain only one such instance.
  ;; If there is more than one, they won't work right.
  '(package-selected-packages
-   '(yasnippet yaml-mode vdiff-magit use-package thrift smex smartparens rust-mode rainbow-delimiters pyvenv projectile origami omnisharp lsp-ui lsp-java htmlize golden-ratio fringe-helper flx find-file-in-repository exec-path-from-shell doom-modeline dockerfile-mode dap-mode counsel company-lsp color-theme-sanityinc-tomorrow color-theme color-moccur browse-kill-ring bm ace-jump-mode yasnippet-snippets web-mode toml-mode ruby-compilation robe rinari plantuml-mode jump inflections inf-ruby flycheck-dialyxir flycheck-credo findr elixir-mode doom-themes cargo)))
+   '(elpy yasnippet yaml-mode vdiff-magit use-package thrift smex smartparens rust-mode rainbow-delimiters pyvenv projectile origami omnisharp lsp-ui lsp-java htmlize golden-ratio fringe-helper flx find-file-in-repository exec-path-from-shell doom-modeline dockerfile-mode dap-mode counsel company-lsp color-theme-sanityinc-tomorrow color-theme color-moccur browse-kill-ring bm ace-jump-mode yasnippet-snippets web-mode toml-mode ruby-compilation robe rinari plantuml-mode jump inflections inf-ruby flycheck-dialyxir flycheck-credo findr elixir-mode doom-themes cargo)))
 (custom-set-faces
  ;; custom-set-faces was added by Custom.
  ;; If you edit it by hand, you could mess it up, so be careful.

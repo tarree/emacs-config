@@ -20,9 +20,6 @@
     flx
     smex
     ace-jump-mode
-    color-theme
-    color-theme-sanityinc-tomorrow
-    doom-themes
     auto-complete
     smartparens
     flycheck
@@ -109,5 +106,7 @@
   (dolist (p required-packages)
     (when (not (package-installed-p p))
       (package-install p))))
+
+(require 'use-package)
 
 ;;; general-packages.el ends here
