@@ -46,7 +46,7 @@
 ;; --------------------------------------------------------- [ package manager ]
 (load "general-packages.el")
 ;; ------------------------------------------------------------ [ color themes ]
-(load-theme 'doom-solarized-dark t)
+(load-theme 'doom-one t)
 
 ;; -------------------------------------------------------- [ setup shell macOS]
 (use-package exec-path-from-shell
@@ -182,6 +182,9 @@
 (use-package origami)
 
 ;; ----------------------------------------------------- [ company & lsp modes ]
+(use-package company
+  :config
+  (add-hook 'after-init-hook 'global-company-mode))
 (use-package projectile
   :ensure t
   :config
@@ -190,6 +193,8 @@
 (use-package lsp-mode
   :config
   (add-hook 'prog-mode-hook #'lsp)
+  ;;(add-hook 'python-mode-hook 'flycheck-mode)
+  ;;(add-hook 'python-mode-hook 'my-python-flycheck-setup)
   :commands lsp
   :hook
   (elixir-mode . lsp)
@@ -222,6 +227,10 @@
   :ensure t
   :after (yasnippet))
 
+(use-package company-box
+  :ensure t
+  :hook (company-mode . company-box-mode))
+
 ;; --------------------------------------------------------------- [ debugging ]
 (dap-mode 1)
 (dap-ui-mode 1)
@@ -247,12 +256,15 @@
 (require 'dap-python)
 
 (defun my-python-flycheck-setup ()
+  (message "Testing")
   (add-to-list 'flycheck-checkers 'lsp)
   (flycheck-add-next-checker 'lsp 'python-pylint)
   (flycheck-add-next-checker 'python-pylint 'python-flake8))
 
-(with-eval-after-load 'lsp
+(with-eval-after-load 'lsp-ui
+  (message "Loaded lsp")
   (with-eval-after-load 'flycheck
+    (message "Loaded flycheck")
     (add-hook 'python-mode-hook 'flycheck-mode)
     (add-hook 'python-mode-hook 'my-python-flycheck-setup)))
 (setq py-shell-name "ipython"
@@ -272,11 +284,16 @@
   (add-hook 'java-mode-hook 'company-mode)
   (add-hook 'java-mode-hook 'lsp-ui-mode))
 
+(use-package groovy-mode
+  :ensure t)
+
+(use-package jenkinsfile-mode
+  :ensure t)
+
 ;; -------------------------------------------------------------------- [ web ]
 ;; npm i -g javascript-typescript-langserver
 ;; npm i -g vscode-css-languageserver-bin
 ;; npm i -g vscode-html-languageserver-bin
-
 
 (use-package web-mode
   :mode
@@ -336,19 +353,12 @@
              (lambda ()
                (add-hook 'before-save-hook 'web-beautify-html-buffer t t))))
 
-(eval-after-load 'css-mode
-  '(add-hook 'css-mode-hook
-             (lambda ()
-               (add-hook 'before-save-hook 'web-beautify-css-buffer t t))))
-
+;(eval-after-load 'css-mode
+;  '(add-hook 'css-mode-hook
+;             (lambda ()
+;               (add-hook 'before-save-hook 'web-beautify-css-buffer t t))))
 ;; ------------------------------------------------------------------ [ c/c++ ]
 ;; clangd
-
-;; ------------------------------------------------------------------- [ rust ]
-;; rustup component add rls rust-analysis rust-src
-(use-package toml-mode)
-(use-package cargo
-  :hook (rust-mode . cargo-minor-mode))
 
 ;; --------------------------------------------------------------------- [ c# ]
 (eval-after-load
@@ -424,6 +434,23 @@
   '(push 'company-robe company-backends))
 (add-hook 'robe-mode-hook 'ac-robe-setup)
 (use-package rinari)
+
+;; ---------------------------------------------------------------------- [ Rust ]
+(use-package toml-mode)
+
+(use-package rust-mode
+  :after (company lsp-mode)
+  :ensure t
+  :config
+  (add-hook 'rust-mode-hook 'flycheck-mode)
+  (add-hook 'rust-mode-hook
+            (lambda () (add-hook 'before-save-hook 'rust-format-buffer))))
+
+;; Add keybindings for interacting with Cargo
+(use-package cargo
+  :hook (rust-mode . cargo-minor-mode))
+
+(setq lsp-rust-server 'rls)
 
 ;; ---------------------------------------------------------------------- [ Org ]
 (use-package org)

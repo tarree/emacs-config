@@ -8,7 +8,8 @@
 (require 'package)
 
 (add-to-list 'package-archives
-             '("melpa" . "https://melpa.org/packages/"))
+             '("melpa" . "https://melpa.org/packages/")
+             '("elpy" . "http://jorgenschaefer.github.io/packages/"))
 
 (defvar required-packages
   '(
@@ -46,6 +47,7 @@
     projectile
     yasnippet
     plantuml-mode
+    flycheck-plantuml
     ;; debugging
     dap-mode
     ;; Simple langs
@@ -74,6 +76,7 @@
     elixir-mode
     flycheck-credo
     flycheck-dialyxir
+    elixir-yasnippets
     ;; Ruby
     robe
     rinari
@@ -81,8 +84,13 @@
     web-mode
     web-beautify
     json-mode
+    lsp-tailwindcss
     ;; Org Mode
     org-super-agenda
+    ;; Rust
+    rust-mode
+    racer
+    cargo
     ;;
     ;; End of lang sections
     ) "A list of packages to ensure are installed at launch.")
