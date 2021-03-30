@@ -5,6 +5,7 @@
 ;;; Code:
 
 (use-package python
+  :ensure t
   :mode ("\\.py" . python-mode)
   :config
   (use-package elpy

@@ -1,4 +1,5 @@
 (use-package doom-themes
+  :ensure t
   :config
   ;; Global settings (defaults)
   (setq doom-themes-enable-bold t    ; if nil, bold is universally disabled
@@ -11,7 +12,8 @@
   ;; Corrects (and improves) org-mode's native fontification.
   (doom-themes-org-config))
 
-(use-package all-the-icons)
+(use-package all-the-icons
+  :ensure t)
 
 ;; ---------------------------------------------------------- [ doom-mode line ]
 ;; M-x all-the-icons-install-fonts

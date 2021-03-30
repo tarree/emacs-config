@@ -1,11 +1,9 @@
-(use-package enh-ruby-mode
-  :mode
-  (("\\.rb\\'" . ruby-mode)))
-
-(use-package robe
-  :config
-  (push 'company-robe company-backends))
-
-(use-package rinari)
+;; ---------------------------------------------------------------------- [ Ruby ]
+(add-hook 'ruby-mode-hook 'robe-mode)
+(eval-after-load 'company
+  '(push 'company-robe company-backends))
+(add-hook 'robe-mode-hook 'ac-robe-setup)
+(use-package rinari
+  :ensure t)
 
 (provide 'lang-ruby)

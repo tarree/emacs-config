@@ -1,109 +1,66 @@
+;; -------------------------------------------------------------------- [ web ]
+;; npm i -g javascript-typescript-langserver
+;; npm i -g vscode-css-languageserver-bin
+;; npm i -g vscode-html-languageserver-bin
+
 (use-package web-mode
-  :bind (("C-c ]" . emmet-next-edit-point)
-         ("C-c [" . emmet-prev-edit-point)
-         ("C-c o b" . browse-url-of-file))
   :mode
-  (("\\.js\\'" . web-mode)
-   ("\\.html?\\'" . web-mode)
-   ("\\.phtml?\\'" . web-mode)
-   ("\\.tpl\\.php\\'" . web-mode)
-   ("\\.[agj]sp\\'" . web-mode)
-   ("\\.as[cp]x\\'" . web-mode)
-   ("\\.erb\\'" . web-mode)
-   ("\\.mustache\\'" . web-mode)
-   ("\\.djhtml\\'" . web-mode)
-   ("\\.jsx$" . web-mode))
-  :config
-  (setq web-mode-markup-indent-offset 2
-        web-mode-css-indent-offset 2
-        web-mode-code-indent-offset 2)
-
-  (add-hook 'web-mode-hook 'jsx-flycheck)
-
-  ;; highlight enclosing tags of the element under cursor
-  (setq web-mode-enable-current-element-highlight t)
-
-  (defadvice web-mode-highlight-part (around tweak-jsx activate)
-    (if (equal web-mode-content-type "jsx")
-        (let ((web-mode-enable-part-face nil))
-          ad-do-it)
-      ad-do-it))
-
-  (defun jsx-flycheck ()
-    (when (equal web-mode-content-type "jsx")
-      ;; enable flycheck
-      (flycheck-select-checker 'jsxhint-checker)
-      (flycheck-mode)))
-
-  ;; editing enhancements for web-mode
-  ;; https://github.com/jtkDvlp/web-mode-edit-element
-  (use-package web-mode-edit-element
-    :config (add-hook 'web-mode-hook 'web-mode-edit-element-minor-mode))
-
-  ;; snippets for HTML
-  ;; https://github.com/smihica/emmet-mode
-  (use-package emmet-mode
-    :init (setq emmet-move-cursor-between-quotes t) ;; default nil
-    :diminish (emmet-mode . " e"))
-  (add-hook 'web-mode-hook 'emmet-mode)
-
-  (defun my-web-mode-hook ()
-    "Hook for `web-mode' config for company-backends."
-    (set (make-local-variable 'company-backends)
-         '((company-tern company-css company-web-html company-files))))
-  (add-hook 'web-mode-hook 'my-web-mode-hook)
-
-  ;; Enable JavaScript completion between <script>...</script> etc.
-  (defadvice company-tern (before web-mode-set-up-ac-sources activate)
-    "Set `tern-mode' based on current language before running company-tern."
-    (message "advice")
-    (if (equal major-mode 'web-mode)
-	(let ((web-mode-cur-language
-	       (web-mode-language-at-pos)))
-	  (if (or (string= web-mode-cur-language "javascript")
-		  (string= web-mode-cur-language "jsx"))
-	      (unless tern-mode (tern-mode))
-	    (if tern-mode (tern-mode -1))))))
-  (add-hook 'web-mode-hook 'company-mode)
-
-  ;; to get completion data for angularJS
-  (use-package ac-html-angular :defer t)
-  ;; to get completion for twitter bootstrap
-  (use-package ac-html-bootstrap :defer t)
-
-  ;; to get completion for HTML stuff
-  ;; https://github.com/osv/company-web
-  (use-package company-web)
-
-  (add-hook 'web-mode-hook 'company-mode))
-
-;; configure CSS mode company backends
-(use-package css-mode
-  :config
-  (defun my-css-mode-hook ()
-    (set (make-local-variable 'company-backends)
-         '((company-css company-dabbrev-code company-files))))
-  (add-hook 'css-mode-hook 'my-css-mode-hook)
-  (add-hook 'css-mode-hook 'company-mode))
-
-;; impatient mode - Live refresh of web pages
-;; https://github.com/skeeto/impatient-mode
-(use-package impatient-mode
-  :diminish (impatient-mode . " i")
-  :commands (impatient-mode))
-
-(use-package scss-mode
-  :mode "\\.scss\\'"
-
-  :hook
-  (scss-mode . siren-scss-mode-setup)
-
-  :custom
-  ;; Turn off annoying auto-compile on save.
-  (scss-compile-at-save nil)
-
+  ("\\.html$" . web-mode)
+  ("\\.phtml\\'" . web-mode)
+  ("\\.tpl\\.php\\'" . web-mode)
+  ("\\.[agj]sp\\'" . web-mode)
+  ("\\.as[cp]x\\'" . web-mode)
+  ("\\.erb\\'" . web-mode)
+  ("\\.mustache\\'" . web-mode)
+  ("\\.djhtml\\'" . web-mode)
+  ("\\.eex\\'" . web-mode)
+  ("\\.leex\\'" . web-mode)
   :init
-  (defun siren-scss-mode-setup ()
-    (setq tab-width 2)))
+  (setq web-mode-markup-indent-offset 2)
+  (setq web-mode-code-indent-offset 2)
+  (setq web-mode-css-indent-offset 2)
+  (setq js-indent-level 2)
+  (setq web-mode-enable-auto-pairing t)
+  (setq web-mode-enable-auto-expanding t)
+  (setq web-mode-enable-css-colorization t)
+  (setq web-mode-tag-auto-close-style 1)
+  (add-hook 'web-mode-hook 'electric-pair-mode))
+
+(use-package web-beautify
+  :ensure t)
+
+(eval-after-load 'web-mode
+  '(define-key web-mode-map (kbd "C-c b") 'web-beautify-html))
+(eval-after-load 'css-mode
+  '(define-key css-mode-map (kbd "C-c b") 'web-beautify-css))
+(eval-after-load 'js
+  '(define-key js-mode-map (kbd "C-c b") 'web-beautify-js))
+
+
+(eval-after-load 'js2-mode
+  '(add-hook 'js2-mode-hook
+             (lambda ()
+               (add-hook 'before-save-hook 'web-beautify-js-buffer t t))))
+
+;; Or if you're using 'js-mode' (a.k.a 'javascript-mode')
+(eval-after-load 'js
+  '(add-hook 'js-mode-hook
+             (lambda ()
+               (add-hook 'before-save-hook 'web-beautify-js-buffer t t))))
+
+(eval-after-load 'json-mode
+  '(add-hook 'json-mode-hook
+             (lambda ()
+               (add-hook 'before-save-hook 'web-beautify-js-buffer t t))))
+
+(eval-after-load 'sgml-mode
+  '(add-hook 'html-mode-hook
+             (lambda ()
+               (add-hook 'before-save-hook 'web-beautify-html-buffer t t))))
+
+(eval-after-load 'web-mode
+  '(add-hook 'web-mode-hook
+             (lambda ()
+               (add-hook 'before-save-hook 'web-beautify-html-buffer t t))))
 
 (provide 'lang-web)
