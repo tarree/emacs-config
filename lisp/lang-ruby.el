@@ -1,8 +1,14 @@
 ;; ---------------------------------------------------------------------- [ Ruby ]
-(add-hook 'ruby-mode-hook 'robe-mode)
-(eval-after-load 'company
-  '(push 'company-robe company-backends))
-(add-hook 'robe-mode-hook 'ac-robe-setup)
+(use-package enh-ruby-mode
+  :ensure t
+  :mode
+  (("\\.rb\\'" . ruby-mode)))
+
+(use-package robe
+  :ensure t
+  :config
+  (push 'company-robe company-backends))
+
 (use-package rinari
   :ensure t)
 

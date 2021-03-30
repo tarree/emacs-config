@@ -9,6 +9,8 @@
         ivy-count-format "%d/%d ")
   (define-key read-expression-map (kbd "C-r") 'counsel-expression-history))
 
+(use-package lsp-ivy :commands lsp-ivy-workspace-symbol)
+
 (use-package ivy-posframe
   :ensure t
   :config

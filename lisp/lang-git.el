@@ -1,3 +1,9 @@
+(use-package vdiff
+  :ensure t)
+
+(use-package vdiff-magit
+  :ensure t)
+
 (use-package magit
   :ensure t
   :bind (:map magit-mode-map

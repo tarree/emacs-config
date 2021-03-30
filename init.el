@@ -1,4 +1,7 @@
-;;; .emacs --- dot emacs file
+;;; package --- Summary
+;;; Commentary:
+;;; Code:
+;;; .emacs --- dot Emacs file
 
 ;; -------------------------------------------------------- [ general settings ]
 (add-to-list 'load-path "~/.emacs.d/lisp/")
@@ -8,32 +11,7 @@
 ;; --------------------------------------------------------- [ package manager ]
 ;;(load "general-packages.el")
 
-;; ----------------------------------------------------- [ company & lsp modes ]
-
-
-
-
-
-
-
-;; in case you are using client which is available as part of lsp refer to the
-;; table bellow for the clients that are distributed as part of lsp-mode.el
-;; (require 'lsp-clients)
-;; (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)
-;; (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
-
-
-
-
-
 ;; --------------------------------------------------------------- [ debugging ]
-(dap-mode 1)
-(dap-ui-mode 1)
-
-
-
-;; ------------------------------------------------------------------ [ c/c++ ]
-;; clangd
 
 
 
@@ -51,3 +29,4 @@
  ;; If there is more than one, they won't work right.
  )
 (put 'upcase-region 'disabled nil)
+;;; init.el ends here

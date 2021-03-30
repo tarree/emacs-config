@@ -15,6 +15,7 @@
 
 (use-package lsp-ui
   :ensure t
+  :after (lsp-mode)
   :commands lsp-ui-mode
   :config
   (define-key lsp-ui-mode-map [remap xref-find-definitions] #'lsp-ui-peek-find-definitions)

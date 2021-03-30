@@ -5,4 +5,9 @@
   :ensure t
   :after (yasnippet))
 
+
+(use-package elixir-yasnippets
+  :ensure t
+  :after (yasnippet))
+
 (provide 'init-yas)

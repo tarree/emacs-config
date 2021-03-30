@@ -4,6 +4,7 @@
 ;; npm i -g vscode-html-languageserver-bin
 
 (use-package web-mode
+  :ensure t
   :mode
   ("\\.html$" . web-mode)
   ("\\.phtml\\'" . web-mode)
@@ -27,6 +28,9 @@
   (add-hook 'web-mode-hook 'electric-pair-mode))
 
 (use-package web-beautify
+  :ensure t)
+
+(use-package json-mode
   :ensure t)
 
 (eval-after-load 'web-mode

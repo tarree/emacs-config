@@ -1,3 +1,7 @@
+(use-package flycheck
+  :ensure t
+  :init (global-flycheck-mode))
+
 ;; Add buffer local Flycheck checkers after LSP for different major modes.
 (defvar-local my-flycheck-local-cache nil)
 (defun my-flycheck-local-checker-get (fn checker property)
@@ -13,5 +17,11 @@
           (lambda ()
             (when (derived-mode-p 'python-mode)
               (setq my-flycheck-local-cache '((next-checkers . (python-pylint)))))))
+
+(add-hook 'lsp-managed-mode-hook
+          (lambda ()
+            (when (derived-mode-p 'elixir-mode)
+              (setq my-flycheck-local-cache '((next-checkers . (elixir-dialyxir elixir-credo)))))))
+
 
 (provide 'init-flycheck)

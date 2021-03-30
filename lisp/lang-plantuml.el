@@ -10,8 +10,10 @@
   (setq plantuml-jar-path "/home/sam/plantuml.jar")
   (setq plantuml-java-args (list "-Djava.awt.headless=true" "-Dhttp.proxyHost=http://gateway.schneider.zscaler.net" "-Dhttp.proxyPort=9480" "-Dhttps.proxyHost=http://gateway.schneider.zscaler.net" "-Dhttps.proxyPort=9480" "-jar" "--illegal-access=deny")))
 
-(with-eval-after-load 'flycheck
-  (require 'flycheck-plantuml)
+(use-package flycheck-plantuml
+  :ensure t
+  :after (flycheck)
+  :config
   (flycheck-plantuml-setup))
 
 (provide 'lang-plantuml)

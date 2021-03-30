@@ -13,7 +13,11 @@
   ("M-<left>" . sp-backward-sexp))
 
 ;; enable rainbow delimiters in all prgramming modes
-(add-hook 'prog-mode-hook #'rainbow-delimiters-mode)
+(use-package rainbow-delimiters
+  :ensure t
+  :init
+  (progn
+    (add-hook 'prog-mode-hook 'rainbow-delimiters-mode)))
 
 ;; enable bookmarks
 (use-package bm
@@ -42,4 +46,4 @@
 (use-package origami
   :ensure t)
 
-(provide 'base-general)
+(provide 'init-general)

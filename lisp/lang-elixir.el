@@ -1,21 +1,21 @@
 ;; ---------------------------------------------------------------------- [ Elixir ]
 ;; Debugging for Elixir
 (require 'dap-elixir)
-(dap-ui-mode)
-(dap-mode)
+
+
 
 ;; Setup code checkers
-(eval-after-load 'flycheck
-  '(flycheck-dialyxir-setup))
-(eval-after-load 'flycheck
-  '(flycheck-credo-setup))
+(use-package flycheck-credo
+  :ensure t
+  :after 'flycheck
+  :config
+  (flycheck-credo-setup))
 
-;; Code for adding flycheck checkers for elixir
-(defun my-elixir-flycheck-setup ()
-  (add-to-list 'flycheck-checkers 'lsp)
-  ;; Dialyxir and credo must be added as required dependencies to mix.exs
-  (flycheck-add-next-checker 'lsp 'elixir-dialyxir)
-  (flycheck-add-next-checker 'lsp 'elixir-credo))
+(use-package flycheck-dialyxir
+  :ensure t
+  :after 'flycheck
+  :config
+  (flycheck-dialyxir-setup))
 
 ;; Setup elixir mode
 (use-package elixir-mode
@@ -24,7 +24,6 @@
   :config
   ;; Enable flycheck for elixir
   (add-hook 'elixir-mode-hook 'flycheck-mode)
-  (add-hook 'elixir-mode-hook 'my-elixir-flycheck-setup)
   ;; Create a buffer-local hook to run elixir-format on save, only when we enable elixir-mode.
   (add-hook 'elixir-mode-hook
             (lambda () (add-hook 'before-save-hook 'elixir-format nil t))))
