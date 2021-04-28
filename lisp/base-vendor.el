@@ -1,3 +1,6 @@
+(use-package browse-kill-ring
+  :ensure t)
+
 (use-package browse-kill-ring+
   :load-path "~/.emacs.d/vendor"
   :bind
