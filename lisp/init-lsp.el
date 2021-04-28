@@ -7,6 +7,7 @@
   :commands lsp
   :hook
   (elixir-mode . lsp)
+  (emacs-lisp-mode-hook . lsp)
   :init
   (setq js-indent-level 2)
   (setq-default indent-tabs-mode nil)
