@@ -10,4 +10,7 @@
 (use-package company-lsp
   :commands company-lsp)
 
+(use-package company-jedi
+  :ensure t)
+
 (provide 'init-company)
