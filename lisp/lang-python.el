@@ -12,13 +12,12 @@
     :ensure t
     :init
     (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
+    (add-to-list 'company-backends 'company-jedi)
     :config
     (setq elpy-rpc-backend "jedi")
     ;; (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
     ;;flycheck-python-flake8-executable "/usr/local/bin/flake8"
-    :bind (:map elpy-mode-map
-	      ("M-." . elpy-goto-definition)
-	      ("M-," . pop-tag-mark)))
+    )
   (elpy-enable))
 
 (use-package pip-requirements
