@@ -8,6 +8,10 @@
       org-todo-keywords '((sequence "TODO" "NEXT" "WAITING" "INPROGRESS" "DONE"))
       org-todo-keyword-faces '(("INPROGRESS" . (:foreground "lightblue" :weight bold))))
 
+(setq org-capture-templates
+      '(("t" "Work Tasks" entry (file+headline "~/org/work.org" "Work Tasks")
+         "* TODO %?\n  %i\n  %a")))
+
 (use-package org-super-agenda
   :ensure t
   :config (org-super-agenda-mode)
@@ -32,15 +36,24 @@
       )
 
 (setq org-agenda-custom-commands
-      '(("z" "Super zaen view"
-         ((agenda "" ((org-agenda-span 'day)
-                      (org-super-agenda-groups
-                       '((:name "Today"
-                                :time-grid t
-                                :date today
-                                :todo "TODAY"
-                                :scheduled today
-                                :order 1)))))
+          '(("z" "Super zaen view"
+            ((agenda "" ((org-agenda-span 'day)
+                       (org-super-agenda-groups
+                        '((:name "Today"
+                                 :time-grid t
+                                 :date today
+                                 :todo "TODAY"
+                                 :scheduled today
+                                 :order 1)
+                          (:name "Due Today"
+                                 :deadline today
+                                 :order 2)
+                          (:name "Overdue"
+                                 :deadline past
+                                 :order 3)
+                          (:name "Due Soon"
+                                 :deadline future
+                                 :order 4)))))
           (alltodo "" ((org-agenda-overriding-header "")
                        (org-super-agenda-groups
                         '((:name "Next to do"
@@ -59,11 +72,14 @@
                           (:name "Overdue"
                                  :deadline past
                                  :order 7)
+                          (:name "Maintenance"
+                                 :tag "Maintenance"
+                                 :order 9)
                           (:name "Issues"
                                  :tag "Issue"
                                  :order 12)
                           (:name "Projects"
-                                 :tag "project"
+                                 :tag "Project"
                                  :order 14)
                           (:name "Emacs"
                                  :tag "Emacs"
