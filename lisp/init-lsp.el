@@ -5,6 +5,10 @@
   ;;(add-hook 'python-mode-hook 'flycheck-mode)
   ;;(add-hook 'python-mode-hook 'my-python-flycheck-setup)
   :commands lsp
+  :custom
+  ;; what to use when checking on-save. "check" is default, I prefer clippy
+  (lsp-rust-analyzer-cargo-watch-command "clippy")
+  (lsp-rust-analyzer-server-display-inlay-hints t)
   :hook
   (elixir-mode . lsp)
   (emacs-lisp-mode-hook . lsp)
