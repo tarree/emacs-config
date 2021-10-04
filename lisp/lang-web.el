@@ -27,6 +27,10 @@
   (setq web-mode-tag-auto-close-style 1)
   (add-hook 'web-mode-hook 'electric-pair-mode))
 
+
+(add-to-list 'lsp-language-id-configuration '("\\.leex\\'" . "html"))
+(add-to-list 'lsp-language-id-configuration '("\\.eex\\'" . "html"))
+
 (use-package web-beautify
   :ensure t)
 
