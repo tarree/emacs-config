@@ -16,6 +16,7 @@
   ("\\.djhtml\\'" . web-mode)
   ("\\.eex\\'" . web-mode)
   ("\\.leex\\'" . web-mode)
+  ("\\.heex\\'" . web-mode)
   :init
   (setq web-mode-markup-indent-offset 2)
   (setq web-mode-code-indent-offset 2)
@@ -29,6 +30,7 @@
 
 
 (add-to-list 'lsp-language-id-configuration '("\\.leex\\'" . "html"))
+(add-to-list 'lsp-language-id-configuration '("\\.heex\\'" . "html"))
 (add-to-list 'lsp-language-id-configuration '("\\.eex\\'" . "html"))
 
 (use-package web-beautify

@@ -15,17 +15,49 @@
     (add-to-list 'company-backends 'company-jedi)
     :config
     (setq elpy-rpc-backend "jedi")
-    ;; (add-hook 'python-mode-hook 'py-autopep8-enable-on-save)
+    (add-hook 'python-mode-hook 'yapf-mode)
+    (add-hook 'before-save-hook 'py-isort-before-save)
+    (add-hook 'python-mode-hook (lambda ()
+                                  (require 'sphinx-doc)
+                                  (sphinx-doc-mode t)))
     ;;flycheck-python-flake8-executable "/usr/local/bin/flake8"
     )
   (elpy-enable))
+
+(use-package lsp-pyright
+  :ensure t
+  :hook (python-mode . (lambda ()
+                          (require 'lsp-pyright)
+                          (lsp))))  ; or lsp-deferred
 
 (use-package pip-requirements
   :ensure t
   :config
   (add-hook 'pip-requirements-mode-hook #'pip-requirements-auto-complete-setup))
 
-(use-package py-autopep8
+(use-package py-isort
+  :ensure t
+  :config)
+
+(use-package importmagic
+    :ensure t
+    :config
+    (add-hook 'python-mode-hook 'importmagic-mode)
+    (setq importmagic-python-interpreter "python"))
+
+;; poetry
+(use-package poetry
+  :ensure t
+  :config
+  (add-hook 'elpy-mode-hook 'poetry-tracking-mode))
+
+;; lsp Python
+(use-package yapfify
+  :ensure t
+  :defer t
+  :hook (python-mode . yapf-mode))
+
+(use-package sphinx-doc
   :ensure t)
 
 
@@ -60,8 +92,5 @@
             (pyvenv-workon pyenv-current-version)
             (message (concat "Setting virtualenv to " pyenv-current-version))))))))
 
-;;(add-hook 'after-init-hook 'pyenv-init)
-;;(add-hook 'projectile-after-switch-project-hook 'pyenv-activate-current-project)
-
 (provide 'lang-python)
-;;; base-python.el ends here
+;;; lang-python.el ends here
