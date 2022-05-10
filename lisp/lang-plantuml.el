@@ -10,6 +10,10 @@
   (setq plantuml-jar-path "/home/sam/plantuml.jar")
   (setq plantuml-java-args (list "-Djava.awt.headless=true" "-Dhttp.proxyHost=http://gateway.schneider.zscaler.net" "-Dhttp.proxyPort=9480" "-Dhttps.proxyHost=http://gateway.schneider.zscaler.net" "-Dhttps.proxyPort=9480" "-jar" "--illegal-access=deny")))
 
+(setq org-plantuml-jar-path (expand-file-name "/home/sam/plantuml.jar"))
+(add-to-list 'org-src-lang-modes '("plantuml" . plantuml))
+(org-babel-do-load-languages 'org-babel-load-languages '((plantuml . t)))
+
 (use-package flycheck-plantuml
   :ensure t
   :after (flycheck)

@@ -8,27 +8,19 @@
   :ensure t
   :mode ("\\.py" . python-mode)
   :config
-  (use-package elpy
-    :ensure t
-    :init
-    (add-to-list 'auto-mode-alist '("\\.py$" . python-mode))
-    (add-to-list 'company-backends 'company-jedi)
-    :config
-    (setq elpy-rpc-backend "jedi")
-    (add-hook 'python-mode-hook 'yapf-mode)
-    (add-hook 'before-save-hook 'py-isort-before-save)
-    (add-hook 'python-mode-hook (lambda ()
-                                  (require 'sphinx-doc)
-                                  (sphinx-doc-mode t)))
-    ;;flycheck-python-flake8-executable "/usr/local/bin/flake8"
-    )
-  (elpy-enable))
+  (add-hook 'python-mode-hook 'yapf-mode)
+  (add-hook 'before-save-hook 'py-isort-before-save)
+  (add-hook 'python-mode-hook (lambda ()
+                                (require 'sphinx-doc)
+                                (sphinx-doc-mode t))))
 
-(use-package lsp-pyright
+(use-package lsp-jedi
   :ensure t
-  :hook (python-mode . (lambda ()
-                          (require 'lsp-pyright)
-                          (lsp))))  ; or lsp-deferred
+  :config
+  (with-eval-after-load "lsp-mode"
+    (add-to-list 'lsp-disabled-clients 'pyls)
+    (add-to-list 'lsp-enabled-clients 'jedi)))
+
 
 (use-package pip-requirements
   :ensure t
@@ -49,7 +41,7 @@
 (use-package poetry
   :ensure t
   :config
-  (add-hook 'elpy-mode-hook 'poetry-tracking-mode))
+  (add-hook 'python-mode-hook 'poetry-tracking-mode))
 
 ;; lsp Python
 (use-package yapfify

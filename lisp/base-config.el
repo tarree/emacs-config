@@ -36,7 +36,7 @@
 (defalias 'yes-or-no-p 'y-or-n-p)
 
 (set-face-attribute 'default nil
-                    :family "Hack"
+                    :family "FiraCode Nerd Font"
                     :height 110
                     :weight 'regular
                     :width 'normal)

@@ -14,11 +14,13 @@
   (elixir-mode . lsp)
   (emacs-lisp-mode-hook . lsp)
   (python-mode . lsp-deferred)
+  (rustic-mode . lsp-deferred)
   :init
   (setq js-indent-level 2)
   (setq-default indent-tabs-mode nil)
   (setq lsp-ui-doc-position 'top)
-  (add-to-list 'exec-path "/home/sam/.elixir-ls/release/"))
+  (add-to-list 'exec-path "/home/sam/.elixir-ls/release/")
+  (add-to-list 'exec-path "/home/sam/.cargo/bin/"))
 
 (use-package lsp-ui
   :ensure t
@@ -29,5 +31,7 @@
   (define-key lsp-ui-mode-map [remap xref-find-references] #'lsp-ui-peek-find-references)
   )
 (add-hook 'lsp-mode-hook 'lsp-ui-mode)
+
+(add-to-list 'lsp-language-id-configuration '("\\.el\\'" . "lisp"))
 
 (provide 'init-lsp)
