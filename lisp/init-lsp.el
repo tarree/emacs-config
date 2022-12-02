@@ -1,6 +1,7 @@
 (use-package lsp-mode
   :ensure t
   :defer t
+  :diminish lsp-mode
   :config
   (add-hook 'prog-mode-hook #'lsp)
   ;;(add-hook 'python-mode-hook 'flycheck-mode)
@@ -15,6 +16,7 @@
   (emacs-lisp-mode-hook . lsp)
   (python-mode . lsp-deferred)
   (rustic-mode . lsp-deferred)
+  (php-mode . lsp-deferred)
   :init
   (setq js-indent-level 2)
   (setq-default indent-tabs-mode nil)

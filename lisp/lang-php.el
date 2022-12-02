@@ -1,9 +1,8 @@
-(use-package lsp-mode
-  :ensure t)
-
 (use-package php-mode
-  :ensure t
-  :config
-  (lsp-mode t))
+ :ensure t
+ :mode
+ ("\\.php\\'" . php-mode))
+
+(add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
 
 (provide 'lang-php)
