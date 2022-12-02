@@ -7,5 +7,4 @@
     (add-to-list 'lsp-enabled-clients 'iph)))
 
 (add-to-list 'auto-mode-alist '("\\.php$" . php-mode))
-
 (provide 'lang-php)
