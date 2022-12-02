@@ -23,6 +23,7 @@
 (require 'lang-git)
 (require 'lang-java)
 (require 'lang-org)
+(require 'lang-php)
 (require 'lang-plantuml)
 (require 'lang-python)
 (require 'lang-ruby)

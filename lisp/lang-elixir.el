@@ -24,6 +24,7 @@
   :config
   ;; Enable flycheck for elixir
   (add-hook 'elixir-mode-hook 'flycheck-mode)
+  (add-to-list 'lsp-enabled-clients 'elixir-ls)
   ;; Create a buffer-local hook to run elixir-format on save, only when we enable elixir-mode.
   (add-hook 'elixir-mode-hook
             (lambda () (add-hook 'before-save-hook 'elixir-format nil t))))
