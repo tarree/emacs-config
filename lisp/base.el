@@ -22,6 +22,7 @@
 (require 'lang-elixir)
 (require 'lang-git)
 (require 'lang-java)
+(require 'lang-k8s)
 (require 'lang-org)
 (require 'lang-php)
 (require 'lang-plantuml)
