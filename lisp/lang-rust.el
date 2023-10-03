@@ -36,6 +36,7 @@
 
   ;; comment to disable rustfmt on save
   (setq rustic-format-trigger 'on-save)
+  (setq rustic-format-on-save 'rustic-cargo-cmt)
   (setq rustic-lsp-server 'rust-analyzer)
   (add-to-list 'lsp-enabled-clients 'rust-analyzer))
 
