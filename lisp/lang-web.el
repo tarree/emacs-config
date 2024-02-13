@@ -39,6 +39,9 @@
 (use-package json-mode
   :ensure t)
 
+(use-package vue-mode
+  :ensure t)
+
 (eval-after-load 'web-mode
   '(define-key web-mode-map (kbd "C-c b") 'web-beautify-html))
 (eval-after-load 'css-mode
