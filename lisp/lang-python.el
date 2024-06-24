@@ -9,7 +9,6 @@
   :mode ("\\.py" . python-mode)
   :config
   (add-hook 'python-mode-hook 'yapf-mode)
-  (add-hook 'python-mode-hook 'python-isort-on-save-mode)
   (add-hook 'python-mode-hook (lambda ()
                                 (require 'sphinx-doc)
                                 (sphinx-doc-mode t))))
@@ -27,7 +26,7 @@
   :config
   (add-hook 'pip-requirements-mode-hook #'pip-requirements-auto-complete-setup))
 
-(use-package python-isort
+(use-package py-isort
   :ensure t
   :config)
 

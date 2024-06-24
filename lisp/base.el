@@ -27,6 +27,7 @@
 (require 'lang-php)
 (require 'lang-plantuml)
 (require 'lang-python)
+(require 'lang-terraform)
 (require 'lang-ruby)
 (require 'lang-rust)
 (require 'lang-web)

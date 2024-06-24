@@ -1,3 +1,9 @@
+(use-package tree-sitter
+  :ensure t)
+
+(use-package tree-sitter-langs
+  :ensure t)
+
 (use-package lsp-mode
   :ensure t
   :defer t
@@ -17,6 +23,7 @@
   (python-mode . lsp-deferred)
   (rustic-mode . lsp-deferred)
   (php-mode . lsp-deferred)
+  (svelte-mode . lsp-deferred)
   :init
   (setq js-indent-level 2)
   (setq-default indent-tabs-mode nil)
@@ -35,5 +42,6 @@
 (add-hook 'lsp-mode-hook 'lsp-ui-mode)
 
 (add-to-list 'lsp-language-id-configuration '("\\.el\\'" . "lisp"))
+(add-to-list 'lsp-language-id-configuration '("\\.hcl\\'" . "hcl"))
 
 (provide 'init-lsp)

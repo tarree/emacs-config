@@ -32,6 +32,7 @@
 (add-to-list 'lsp-language-id-configuration '("\\.leex\\'" . "html"))
 (add-to-list 'lsp-language-id-configuration '("\\.heex\\'" . "html"))
 (add-to-list 'lsp-language-id-configuration '("\\.eex\\'" . "html"))
+(add-to-list 'lsp-language-id-configuration '("\\.svelte\\'" . "svelte"))
 
 (use-package web-beautify
   :ensure t)
@@ -41,6 +42,14 @@
 
 (use-package vue-mode
   :ensure t)
+
+(use-package svelte-mode
+  :ensure t
+  :config
+  (add-to-list 'lsp-enabled-clients 'svelte-ls)
+  (add-to-list 'lsp-enabled-clients 'eslint)
+  (add-to-list 'lsp-enabled-clients 'ts-ls))
+
 
 (eval-after-load 'web-mode
   '(define-key web-mode-map (kbd "C-c b") 'web-beautify-html))
